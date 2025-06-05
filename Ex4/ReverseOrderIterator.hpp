@@ -15,7 +15,7 @@ private:
 
 public:
     ReverseOrderIterator(const MyContainer<T>& container, bool begin) {
-        const std::vector<T>& original = container.getElements();
+        const std::vector<T>& original = container.data;
         reversed = std::vector<T>(original.rbegin(), original.rend());
         index = begin ? 0 : reversed.size();
     }

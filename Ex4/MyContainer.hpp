@@ -77,74 +77,62 @@ public:
 
      // חבר למחלקת האיטרטור
     friend class AscendingOrderIterator<T>;
+    friend class DescendingOrderIterator<T>;
+    friend class SideCrossOrderIterator<T>;
+    friend class ReverseOrderIterator<T>;
+    friend class OrderIterator<T>;
+    friend class MiddleOutOrderIterator<T>;
+
+
 
     // גישה לאיטרטור מהקונטיינר
     AscendingOrderIterator<T> begin_ascending_order() const {
         return AscendingOrderIterator<T>(*this, true);
     }
-
     AscendingOrderIterator<T> end_ascending_order() const {
         return AscendingOrderIterator<T>(*this, false);
     }
 
-    friend class DescendingOrderIterator<T>;
 
     DescendingOrderIterator<T> begin_descending_order() const {
         return DescendingOrderIterator<T>(*this, true);
     }
-
     DescendingOrderIterator<T> end_descending_order() const {
         return DescendingOrderIterator<T>(*this, false);
     }
 
-    friend class SideCrossOrderIterator<T>;
 
     SideCrossOrderIterator<T> begin_side_cross_order() const {
         return SideCrossOrderIterator<T>(*this, true);
     }
-
     SideCrossOrderIterator<T> end_side_cross_order() const {
         return SideCrossOrderIterator<T>(*this, false);
     }
 
-    friend class ReverseOrderIterator<T>;
 
     ReverseOrderIterator<T> begin_reverse_order() const {
         return ReverseOrderIterator<T>(*this, true);
     }
-
     ReverseOrderIterator<T> end_reverse_order() const {
         return ReverseOrderIterator<T>(*this, false);
     }
 
-    friend class OrderIterator<T>;
 
     OrderIterator<T> begin_order() const {
         return OrderIterator<T>(*this, true);
     }
-
     OrderIterator<T> end_order() const {
         return OrderIterator<T>(*this, false);
     }
 
-    friend class MiddleOutOrderIterator<T>;
 
     MiddleOutOrderIterator<T> begin_middle_out_order() const {
         return MiddleOutOrderIterator<T>(*this, true);
     }
-
     MiddleOutOrderIterator<T> end_middle_out_order() const {
         return MiddleOutOrderIterator<T>(*this, false);
     }
 
-
-
-
-
-    // גישה לפנימיות עבור איטרטורים- לא בטוחה שצריך
-    const std::vector<T>& getElements() const {
-        return data;
-    }
 
 
 

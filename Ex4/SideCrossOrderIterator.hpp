@@ -20,16 +20,16 @@ public:
 
         size_t left = 0;
         size_t right = sorted.size() - 1;
-        while (left <= right) {
-            if (left == right) {
-                crossOrder.push_back(sorted[left]);
-            } else {
-                crossOrder.push_back(sorted[left]);
-                crossOrder.push_back(sorted[right]);
-            }
-            ++left;
-            --right;
-        }
+        while (left < right) {
+        crossOrder.push_back(sorted[left]);
+        crossOrder.push_back(sorted[right]);
+        ++left;
+        --right;
+    }
+    if (left == right) {
+        crossOrder.push_back(sorted[left]);
+    }
+
 
         index = begin ? 0 : crossOrder.size();
     }
