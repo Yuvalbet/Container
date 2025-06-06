@@ -4,6 +4,7 @@
 #include "MyContainer.hpp"
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
 
 namespace Container {
 
@@ -24,6 +25,11 @@ public:
         index = begin ? 0 : sorted.size();
     }
 
+    // השוואה ==
+    bool operator==(const AscendingOrderIterator& other) const {
+        return index == other.index;
+    }
+
     // השוואה
     bool operator!=(const AscendingOrderIterator& other) const {
         return index != other.index;
@@ -31,13 +37,26 @@ public:
 
     // גישה לאיבר
     const T& operator*() const {
+        if (index >= sorted.size()) {
+            throw std::out_of_range("Dereferencing past-the-end iterator");
+        }
         return sorted.at(index);
     }
 
-    // ++ (התקדמות באיטרציה)
+    // ++it פריפיקסי
     AscendingOrderIterator& operator++() {
+        if (index >= sorted.size()) {
+            throw std::out_of_range("Increment past-the-end iterator");
+        }
         ++index;
         return *this;
+    }
+
+    // it++ פוסטפיקסי
+    AscendingOrderIterator operator++(int) {
+        AscendingOrderIterator temp = *this;
+        ++(*this);
+        return temp;
     }
 };
 

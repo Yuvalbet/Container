@@ -4,8 +4,12 @@
 #include <vector>
 #include <algorithm>
 #include "MyContainer.hpp"
+#include <stdexcept>
 
 namespace Container {
+
+template<typename T>
+class MyContainer;  // forward declaration
 
 template<typename T>
 class DescendingOrderIterator {
@@ -21,20 +25,38 @@ public:
         index = begin ? 0 : sorted.size();
     }
 
+    // השוואה ==
+    bool operator==(const DescendingOrderIterator& other) const {
+        return index == other.index;
+    }
+
     // !=
     bool operator!=(const DescendingOrderIterator& other) const {
         return index != other.index;
     }
 
-    // *it
+     // גישה לאיבר
     const T& operator*() const {
+        if (index >= sorted.size()) {
+            throw std::out_of_range("Dereferencing past-the-end iterator");
+        }
         return sorted.at(index);
     }
 
-    // ++it
+    // ++it פריפיקסי
     DescendingOrderIterator& operator++() {
+        if (index >= sorted.size()) {
+            throw std::out_of_range("Increment past-the-end iterator");
+        }
         ++index;
         return *this;
+    }
+
+    // it++ פוסטפיקסי
+    DescendingOrderIterator operator++(int) {
+        DescendingOrderIterator temp = *this;
+        ++(*this);
+        return temp;
     }
 };
 
