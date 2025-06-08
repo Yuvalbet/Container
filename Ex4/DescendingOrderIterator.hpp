@@ -1,3 +1,4 @@
+//Email: yuvali532@gmail.com
 #ifndef DESCENDING_ORDER_ITERATOR_HPP
 #define DESCENDING_ORDER_ITERATOR_HPP
 
@@ -14,28 +15,31 @@ class MyContainer;  // forward declaration
 template<typename T>
 class DescendingOrderIterator {
 private:
+    // Holds the container elements sorted in descending order
     std::vector<T> sorted;
+    // Current iterator index
     size_t index;
 
 public:
-    // בנאי - ממיין מהגדול לקטן
+    // Constructor: initializes the sorted vector in descending order
     DescendingOrderIterator(const MyContainer<T>& container, bool begin) {
-        sorted = container.data; 
-        std::sort(sorted.begin(), sorted.end(), std::greater<T>());
-        index = begin ? 0 : sorted.size();
+        sorted = container.data;  // Accessible due to 'friend' declaration
+        std::sort(sorted.begin(), sorted.end(), std::greater<T>()); // Sort descending
+        index = begin ? 0 : sorted.size(); 
     }
 
-    // השוואה ==
+    // Equality comparison
     bool operator==(const DescendingOrderIterator& other) const {
         return index == other.index;
     }
 
-    // !=
+    
+    // Inequality comparison
     bool operator!=(const DescendingOrderIterator& other) const {
         return index != other.index;
     }
 
-     // גישה לאיבר
+    // Dereference operator: accesses current element
     const T& operator*() const {
         if (index >= sorted.size()) {
             throw std::out_of_range("Dereferencing past-the-end iterator");
@@ -43,7 +47,8 @@ public:
         return sorted.at(index);
     }
 
-    // ++it פריפיקסי
+    
+    // Prefix increment (++it)
     DescendingOrderIterator& operator++() {
         if (index >= sorted.size()) {
             throw std::out_of_range("Increment past-the-end iterator");
@@ -52,7 +57,7 @@ public:
         return *this;
     }
 
-    // it++ פוסטפיקסי
+    // Postfix increment (it++)
     DescendingOrderIterator operator++(int) {
         DescendingOrderIterator temp = *this;
         ++(*this);
@@ -60,6 +65,6 @@ public:
     }
 };
 
-} // namespace Container
+} 
 
-#endif  // DESCENDING_ORDER_ITERATOR_HPP
+#endif 

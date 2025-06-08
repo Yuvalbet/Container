@@ -1,3 +1,4 @@
+//Email: yuvali532@gmail.com
 #ifndef MIDDLE_OUT_ORDER_ITERATOR_HPP
 #define MIDDLE_OUT_ORDER_ITERATOR_HPP
 
@@ -10,15 +11,31 @@ namespace Container {
 template<typename T>
 class MyContainer;  // forward declaration
 
+/**
+ * MiddleOutOrderIterator
+ * Iterates from the middle of the container outward:
+ * - Odd-sized: middle, left, right, left, right...
+ * - Even-sized: - left-middle, right-middle, left-1, right+1...
+ */
 template<typename T>
 class MiddleOutOrderIterator {
 private:
-    std::vector<T> middleOut;
+    // Holds the reordered elements
+    std::vector<T> sorted;
+    // Current index in iteration
     size_t index;
 
 public:
+    /*
+     * Constructor: Initializes the iterator with the middle-out order.
+     * Strategy:
+     * - Start from the middle of the container.
+     * - Then alternate outward to the left and right.
+     * - For even-length containers, begin with the left-middle.
+     *   For odd-length containers, begin with the exact middle.
+     */
     MiddleOutOrderIterator(const MyContainer<T>& container, bool begin) {
-        const std::vector<T>& original = container.data; // ✅ גישה ישירה עם friend
+        const std::vector<T>& original = container.data; // Access allowed via 'friend'
         int n = static_cast<int>(original.size());
         if (n == 0) {
             index = 0;
@@ -27,9 +44,9 @@ public:
         
         int mid = n / 2;
         if (n % 2 == 0) {
-            mid = mid - 1;  // התחלה מהאמצעי השמאלי במקרה זוגי
+            mid = mid - 1;  // For even-sized containers, start at the left-middle
         }
-        middleOut.push_back(original[mid]);
+        sorted.push_back(original[mid]);
 
         int left = mid - 1;
         int right = mid + 1;
@@ -37,40 +54,40 @@ public:
         int step = 0;
         while (left >= 0 || right < n) {
             if (n % 2 == 1) {
-                // אי זוגי: סדר שמאל - ימין - שמאל - ימין ...
-                if (step % 2 == 0) {  // אפילו - שמאל
+                // Odd-sized: alternate left-right
+                if (step % 2 == 0) {  
                     if (left >= 0) {
-                        middleOut.push_back(original[left]);
+                        sorted.push_back(original[left]);
                         --left;
                     } else if (right < n) {
-                        middleOut.push_back(original[right]);
+                        sorted.push_back(original[right]);
                         ++right;
                     }
-                } else {  // אי-זוגי - ימין
+                } else {  
                     if (right < n) {
-                        middleOut.push_back(original[right]);
+                        sorted.push_back(original[right]);
                         ++right;
                     } else if (left >= 0) {
-                        middleOut.push_back(original[left]);
+                        sorted.push_back(original[left]);
                         --left;
                     }
                 }
             } else {
-                // זוגי: סדר ימין - שמאל - ימין - שמאל ...
-                if (step % 2 == 0) {  // אפילו - ימין
+                // Even-sized: alternate right-left
+                if (step % 2 == 0) {  
                     if (right < n) {
-                        middleOut.push_back(original[right]);
+                        sorted.push_back(original[right]);
                         ++right;
                     } else if (left >= 0) {
-                        middleOut.push_back(original[left]);
+                        sorted.push_back(original[left]);
                         --left;
                     }
-                } else {  // אי-זוגי - שמאל
+                } else {  
                     if (left >= 0) {
-                        middleOut.push_back(original[left]);
+                        sorted.push_back(original[left]);
                         --left;
                     } else if (right < n) {
-                        middleOut.push_back(original[right]);
+                        sorted.push_back(original[right]);
                         ++right;
                     }
                 }
@@ -78,35 +95,37 @@ public:
             ++step;
         }
 
-        index = begin ? 0 : middleOut.size();
+        index = begin ? 0 : sorted.size();
     }
 
-
+    // Equality operator
     bool operator==(const MiddleOutOrderIterator& other) const {
         return index == other.index;
     }
 
+    // Inequality operator
     bool operator!=(const MiddleOutOrderIterator& other) const {
         return index != other.index;
     }
 
+    // Dereference operator: returns the current element
     const T& operator*() const {
-        if (index >= middleOut.size()) {
+        if (index >= sorted.size()) {
             throw std::out_of_range("Dereferencing past-the-end iterator");
         }
-        return middleOut.at(index);
+        return sorted.at(index);
     }
 
-    // ++it פריפיקסי
+    // Prefix increment (++it)
     MiddleOutOrderIterator& operator++() {
-        if (index >= middleOut.size()) {
+        if (index >= sorted.size()) {
             throw std::out_of_range("Increment past-the-end iterator");
         }
         ++index;
         return *this;
     }
 
-    // it++ פוסטפיקסי
+    // Postfix increment (it++)
     MiddleOutOrderIterator operator++(int) {
         MiddleOutOrderIterator temp = *this;
         ++(*this);
@@ -114,6 +133,6 @@ public:
     }
 };
 
-} // namespace Container
+} 
 
-#endif  // MIDDLE_OUT_ORDER_ITERATOR_HPP
+#endif  

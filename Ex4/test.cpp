@@ -1,3 +1,4 @@
+//Email: yuvali532@gmail.com
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "MyContainer.hpp"
@@ -7,7 +8,7 @@
 
 using namespace Container;
 
-// טסטים על אינטגרים
+// Tests with integers
 TEST_CASE("Test integers") {
     std::cout << "Testing with integers (int):\n";
 
@@ -17,7 +18,7 @@ TEST_CASE("Test integers") {
     c.add(6);
     c.add(1);
     c.add(2);
-    c.add(10);  // הוספת איבר נוסף כדי לבדוק את MiddleOut בסדר זוגי
+    c.add(10);  
 
     // Verify size
     CHECK(c.size() == 6);  // 6 items in the container
@@ -31,12 +32,7 @@ TEST_CASE("Test integers") {
     CHECK(c.size() == 6);  // 6 items after removal
 
     // Test removing an element that doesn't exist
-    try {
-        c.remove(100);  // should throw exception
-        CHECK(false);  // should not reach here
-    } catch (const std::runtime_error& e) {
-        // Expected exception
-    }
+    CHECK_THROWS_AS(c.remove(100), std::runtime_error);
 
     // Test negative numbers
     c.add(-5);
@@ -99,6 +95,7 @@ TEST_CASE("Test integers") {
 
 }
 
+// Test iterators and their operators: ==, !=, prefix ++, postfix ++
 TEST_CASE("Iterator functionality - operators ==, !=, ++") {
     MyContainer<int> c;
     c.add(5);
@@ -190,9 +187,24 @@ TEST_CASE("Iterator functionality - operators ==, !=, ++") {
     }
 }
 
+// Empty container test for type int
+TEST_CASE("Empty container<int> - basic iterator behavior") {
+    MyContainer<int> c;
+
+    auto it = c.begin_ascending_order();
+    auto end = c.end_ascending_order();
+
+    CHECK(it == end);  // No elements, begin == end
+    CHECK_THROWS_AS(*it, std::out_of_range);
+    CHECK_THROWS_AS(++it, std::out_of_range);
+    CHECK_THROWS_AS(it++, std::out_of_range);
+    CHECK(c.begin_descending_order() == c.end_descending_order());
+    CHECK_FALSE(c.begin_descending_order() != c.end_descending_order());
+
+}
 
 
-// טסטים על דאבלים
+// Tests with doubles
 TEST_CASE("Test doubles") {
     std::cout << "\nTesting with doubles (double):\n";
 
@@ -213,12 +225,7 @@ TEST_CASE("Test doubles") {
     CHECK(c.size() == 3);  // 3 items after removal
 
     // Test removing an element that doesn't exist
-    try {
-        c.remove(100.0);  // should throw exception
-        CHECK(false);  // should not reach here
-    } catch (const std::runtime_error& e) {
-        // Expected exception
-    }
+    CHECK_THROWS_AS(c.remove(100.0), std::runtime_error);
 
  // Ascending Order Iterator
     std::vector<double> expected_ascending = { 1.5, 7.5, 7.5 };
@@ -269,7 +276,7 @@ TEST_CASE("Test doubles") {
     CHECK(result_middle_out == expected_middle_out);
 }
 
-// טסטים על דאבל
+// Test iterators and their operators: ==, !=, prefix ++, postfix ++
 TEST_CASE("Iterator functionality - operators ==, !=, ++ with double") {
     MyContainer<double> c;
     c.add(3.14);
@@ -361,8 +368,23 @@ TEST_CASE("Iterator functionality - operators ==, !=, ++ with double") {
     }
 }
 
+// Empty container test for type double
+TEST_CASE("Empty container<double> - basic iterator behavior") {
+    MyContainer<double> c;
 
-// טסטים על סטרינגים
+    auto it = c.begin_ascending_order();
+    auto end = c.end_ascending_order();
+
+    CHECK(it == end);
+    CHECK_THROWS_AS(*it, std::out_of_range);
+    CHECK_THROWS_AS(++it, std::out_of_range);
+    CHECK_THROWS_AS(it++, std::out_of_range);
+    CHECK(c.begin_descending_order() == c.end_descending_order());
+    CHECK_FALSE(c.begin_descending_order() != c.end_descending_order());
+
+}
+
+// Tests for strings
 TEST_CASE("Test strings") {
     std::cout << "\nTesting with strings (std::string):\n";
 
@@ -384,12 +406,7 @@ TEST_CASE("Test strings") {
     CHECK(c.size() == 4);  // 4 items after removal
 
     // Test removing an element that doesn't exist
-    try {
-        c.remove("pear");  // should throw exception
-        CHECK(false);  // should not reach here
-    } catch (const std::runtime_error& e) {
-        // Expected exception
-    }
+    CHECK_THROWS_AS(c.remove("pear"), std::runtime_error);
 
      // Ascending Order Iterator
     std::vector<std::string> expected_ascending = { "apple", "apple", "banana", "mango" };
@@ -440,7 +457,7 @@ TEST_CASE("Test strings") {
     CHECK(result_middle_out == expected_middle_out);
 }
 
-// טסטים על מחרוזות
+// Test iterators and their operators: ==, !=, prefix ++, postfix ++
 TEST_CASE("Iterator functionality - operators ==, !=, ++ with std::string") {
     MyContainer<std::string> c;
     c.add("banana");
@@ -530,4 +547,20 @@ TEST_CASE("Iterator functionality - operators ==, !=, ++ with std::string") {
         while (it1 != it_end) ++it1;
         CHECK(it1 == it_end);
     }
+}
+
+// Test behavior of empty container for strings
+TEST_CASE("Empty container<std::string> - basic iterator behavior") {
+    MyContainer<std::string> c;
+
+    auto it = c.begin_ascending_order();
+    auto end = c.end_ascending_order();
+
+    CHECK(it == end);
+    CHECK_THROWS_AS(*it, std::out_of_range);
+    CHECK_THROWS_AS(++it, std::out_of_range);
+    CHECK_THROWS_AS(it++, std::out_of_range);
+    CHECK(c.begin_descending_order() == c.end_descending_order());
+    CHECK_FALSE(c.begin_descending_order() != c.end_descending_order());
+
 }

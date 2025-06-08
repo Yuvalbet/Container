@@ -1,3 +1,4 @@
+//Email: yuvali532@gmail.com
 #include "MyContainer.hpp"
 #include "AscendingOrderIterator.hpp"
 #include "DescendingOrderIterator.hpp"
@@ -10,7 +11,7 @@
 using namespace Container;
 
 int main() {
-    // בדיקת קונטיינר עם int
+    // Test MyContainer with int values
     MyContainer<int> intContainer;
     intContainer.add(7);
     intContainer.add(15);
@@ -57,7 +58,7 @@ int main() {
     }
     std::cout << std::endl;
 
-    // בדיקת קונטיינר עם double
+    // Test MyContainer with double values
     MyContainer<double> doubleContainer;
     doubleContainer.add(3.14);
     doubleContainer.add(1.618);
@@ -104,7 +105,7 @@ int main() {
     std::cout << std::endl;
 
 
-    // בדיקת קונטיינר עם string
+    // Test MyContainer with std::string values
     MyContainer<std::string> stringContainer;
     stringContainer.add("apple");
     stringContainer.add("banana");

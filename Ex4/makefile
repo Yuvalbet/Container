@@ -1,4 +1,5 @@
-# משתנים
+//Email: yuvali532@gmail.com
+# Variables
 CXX = g++
 CXXFLAGS = -Wall -g
 SRC = main.cpp
@@ -8,20 +9,20 @@ DOCTEST_SRC = test.cpp
 DOCTEST_EXEC = test
 DOCTEST_DIR = ./doctest
 
-# הפקודה make Main - להרצת קובץ ההדגמה
+# Target: make Main - Compiles and runs the demo program
 Main: $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(EXEC)
 	./$(EXEC)
 
-# הפקודה make test - להרצת בדיקות היחידה
+# Target: make test - Compiles and runs the unit tests using Doctest
 test: $(DOCTEST_SRC)
 	$(CXX) $(CXXFLAGS) $(DOCTEST_SRC) -o $(DOCTEST_EXEC) -I$(DOCTEST_DIR)
 	./$(DOCTEST_EXEC)
 
-# הפקודה make valgrind - בדיקת זליגת זיכרון באמצעות valgrind
+# Target: make valgrind - Runs valgrind to check for memory leaks in the demo
 valgrind: Main
 	valgrind --leak-check=full --show-leak-kinds=all ./$(EXEC)
 
-# הפקודה make clean - לניקוי קבצים לא רלוונטיים לאחר ההרצה
+# Target: make clean - Removes generated files 
 clean:
 	rm -f $(OBJ) $(EXEC) $(DOCTEST_EXEC)

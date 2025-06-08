@@ -1,3 +1,4 @@
+//Email: yuvali532@gmail.com
 #ifndef MY_CONTAINER_HPP
 #define MY_CONTAINER_HPP
 
@@ -6,7 +7,7 @@
 #include <stdexcept>
 #include <algorithm>
 
-
+// Include all custom iterator headers
 #include "AscendingOrderIterator.hpp"
 #include "DescendingOrderIterator.hpp"
 #include "SideCrossOrderIterator.hpp"
@@ -28,12 +29,12 @@ public:
     ~MyContainer() = default;
 
 
-    // הוספת איבר
+    // Adds an element to the container
     void add(const T& element) {
         data.push_back(element);
     }
 
-    // הסרת כל ההופעות של איבר
+    // Removes all occurrences of the element
     void remove(const T& element) {
     auto it = std::remove(data.begin(), data.end(), element);
     if (it == data.end()) {
@@ -43,12 +44,12 @@ public:
     }
 
 
-    // גודל הקונטיינר
+    // Returns number of elements in the container
     size_t size() const {
         return data.size();
     }
 
-    // הדפסת הקונטיינר
+    // Overloaded stream operator to print container contents
     friend std::ostream& operator<<(std::ostream& os, const MyContainer& container) {
         os << "[";
         for (size_t i = 0; i < container.data.size(); ++i) {
@@ -61,7 +62,7 @@ public:
         return os;
     }
 
-     // חבר למחלקת האיטרטור
+    // Declare iterator classes as friends to allow them access to private 'data'
     friend class AscendingOrderIterator<T>;
     friend class DescendingOrderIterator<T>;
     friend class SideCrossOrderIterator<T>;
@@ -71,7 +72,7 @@ public:
 
 
 
-    // גישה לאיטרטור מהקונטיינר
+    // Ascending order iterators
 
     AscendingOrderIterator<T> begin_ascending_order() const {
         if (data.empty()) {
@@ -84,7 +85,8 @@ public:
         return AscendingOrderIterator<T>(*this, false);
     }
 
-    
+    // Descending order iterators
+
     DescendingOrderIterator<T> begin_descending_order() const {
         if (data.empty()) {
             return end_descending_order();
@@ -95,6 +97,8 @@ public:
     DescendingOrderIterator<T> end_descending_order() const {
         return DescendingOrderIterator<T>(*this, false);
     }
+
+    // Side-cross order iterators 
 
     SideCrossOrderIterator<T> begin_side_cross_order() const {
         if (data.empty()) {
@@ -107,6 +111,8 @@ public:
         return SideCrossOrderIterator<T>(*this, false);
     }
 
+    // Reverse order iterators
+
     ReverseOrderIterator<T> begin_reverse_order() const {
         if (data.empty()) {
             return end_reverse_order();
@@ -118,6 +124,8 @@ public:
         return ReverseOrderIterator<T>(*this, false);
     }
 
+    // Regular order iterators
+
     OrderIterator<T> begin_order() const {
         if (data.empty()) {
             return end_order();
@@ -128,6 +136,8 @@ public:
     OrderIterator<T> end_order() const {
         return OrderIterator<T>(*this, false);
     }
+
+    // Middle-out order iterators
 
     MiddleOutOrderIterator<T> begin_middle_out_order() const {
         if (data.empty()) {
@@ -146,6 +156,6 @@ public:
 
 };
 
-}  // namespace Container
+} 
 
-#endif  // MY_CONTAINER_HPP
+#endif  
