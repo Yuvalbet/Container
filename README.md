@@ -69,7 +69,3 @@ All unit tests are written using the Doctest framework. The tests cover:
 Running `make test` compiles and executes these tests, showing detailed results.
 
 ---
-
-## Conclusion
-
-This project demonstrates a comprehensive approach to implementing custom container classes and iterators in C++ without relying on STL containers. It also emphasizes clean memory management, thorough testing, and proper use of language features such as the `friend` keyword.
