@@ -8,6 +8,7 @@
 
 using namespace Container;
 
+
 // Tests with integers
 TEST_CASE("Test integers") {
     std::cout << "Testing with integers (int):\n";
@@ -187,22 +188,17 @@ TEST_CASE("Iterator functionality - operators ==, !=, ++") {
     }
 }
 
-// Empty container test for type int
-TEST_CASE("Empty container<int> - basic iterator behavior") {
-    MyContainer<int> c;
 
-    auto it = c.begin_ascending_order();
-    auto end = c.end_ascending_order();
+TEST_CASE("Empty container with int") {
+    MyContainer<int> empty;
 
-    CHECK(it == end);  // No elements, begin == end
-    CHECK_THROWS_AS(*it, std::out_of_range);
-    CHECK_THROWS_AS(++it, std::out_of_range);
-    CHECK_THROWS_AS(it++, std::out_of_range);
-    CHECK(c.begin_descending_order() == c.end_descending_order());
-    CHECK_FALSE(c.begin_descending_order() != c.end_descending_order());
-
+    CHECK(empty.begin_ascending_order() == empty.end_ascending_order());
+    CHECK(empty.begin_descending_order() == empty.end_descending_order());
+    CHECK(empty.begin_side_cross_order() == empty.end_side_cross_order());
+    CHECK(empty.begin_reverse_order() == empty.end_reverse_order());
+    CHECK(empty.begin_order() == empty.end_order());
+    CHECK(empty.begin_middle_out_order() == empty.end_middle_out_order());
 }
-
 
 // Tests with doubles
 TEST_CASE("Test doubles") {
@@ -368,21 +364,18 @@ TEST_CASE("Iterator functionality - operators ==, !=, ++ with double") {
     }
 }
 
-// Empty container test for type double
-TEST_CASE("Empty container<double> - basic iterator behavior") {
-    MyContainer<double> c;
+TEST_CASE("Empty container with double") {
+    MyContainer<double> empty;
 
-    auto it = c.begin_ascending_order();
-    auto end = c.end_ascending_order();
-
-    CHECK(it == end);
-    CHECK_THROWS_AS(*it, std::out_of_range);
-    CHECK_THROWS_AS(++it, std::out_of_range);
-    CHECK_THROWS_AS(it++, std::out_of_range);
-    CHECK(c.begin_descending_order() == c.end_descending_order());
-    CHECK_FALSE(c.begin_descending_order() != c.end_descending_order());
-
+    CHECK(empty.begin_ascending_order() == empty.end_ascending_order());
+    CHECK(empty.begin_descending_order() == empty.end_descending_order());
+    CHECK(empty.begin_side_cross_order() == empty.end_side_cross_order());
+    CHECK(empty.begin_reverse_order() == empty.end_reverse_order());
+    CHECK(empty.begin_order() == empty.end_order());
+    CHECK(empty.begin_middle_out_order() == empty.end_middle_out_order());
 }
+
+
 
 // Tests for strings
 TEST_CASE("Test strings") {
@@ -549,18 +542,13 @@ TEST_CASE("Iterator functionality - operators ==, !=, ++ with std::string") {
     }
 }
 
-// Test behavior of empty container for strings
-TEST_CASE("Empty container<std::string> - basic iterator behavior") {
-    MyContainer<std::string> c;
+TEST_CASE("Empty container with string") {
+    MyContainer<std::string> empty;
 
-    auto it = c.begin_ascending_order();
-    auto end = c.end_ascending_order();
-
-    CHECK(it == end);
-    CHECK_THROWS_AS(*it, std::out_of_range);
-    CHECK_THROWS_AS(++it, std::out_of_range);
-    CHECK_THROWS_AS(it++, std::out_of_range);
-    CHECK(c.begin_descending_order() == c.end_descending_order());
-    CHECK_FALSE(c.begin_descending_order() != c.end_descending_order());
-
+    CHECK(empty.begin_ascending_order() == empty.end_ascending_order());
+    CHECK(empty.begin_descending_order() == empty.end_descending_order());
+    CHECK(empty.begin_side_cross_order() == empty.end_side_cross_order());
+    CHECK(empty.begin_reverse_order() == empty.end_reverse_order());
+    CHECK(empty.begin_order() == empty.end_order());
+    CHECK(empty.begin_middle_out_order() == empty.end_middle_out_order());
 }

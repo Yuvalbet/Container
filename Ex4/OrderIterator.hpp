@@ -28,7 +28,13 @@ public:
      * @param begin - If true, initialize at beginning; otherwise, at end
      */
     OrderIterator(const MyContainer<T>& container, bool begin)
-        : data(container.data), index(begin ? 0 : container.data.size()) {}
+        : data(container.data) {
+        if (data.empty()) {
+            index = 0;  
+        } else {
+            index = begin ? 0 : data.size();
+        }
+    }
 
     // Equality operator
     bool operator==(const OrderIterator& other) const {

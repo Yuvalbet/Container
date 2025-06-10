@@ -23,9 +23,14 @@ private:
 public:
     // Constructor: initializes the sorted vector in descending order
     DescendingOrderIterator(const MyContainer<T>& container, bool begin) {
-        sorted = container.data;  // Accessible due to 'friend' declaration
-        std::sort(sorted.begin(), sorted.end(), std::greater<T>()); // Sort descending
-        index = begin ? 0 : sorted.size(); 
+        sorted = container.data; // Access allowed via 'friend'
+
+        if (!sorted.empty()) {
+            std::sort(sorted.begin(), sorted.end(), std::greater<T>()); // Sort descending
+            index = begin ? 0 : sorted.size();  // begin -> 0, end -> size
+        } else {
+            index = 0;  // Both begin and end will be at index 0 for empty container
+        }
     }
 
     // Equality comparison

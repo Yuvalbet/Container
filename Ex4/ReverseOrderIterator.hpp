@@ -29,6 +29,12 @@ public:
      */
     ReverseOrderIterator(const MyContainer<T>& container, bool begin) {
         const std::vector<T>& original = container.data; // Access allowed via 'friend'
+
+        if (original.empty()) {
+            index = 0;  
+            return;
+        }
+
         sorted = std::vector<T>(original.rbegin(), original.rend());  // reverse copy
         index = begin ? 0 : sorted.size();
     }

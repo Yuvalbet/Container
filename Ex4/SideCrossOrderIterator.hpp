@@ -28,22 +28,29 @@ public:
      * @param begin - If true, start at beginning; otherwise at the end
      */
     SideCrossOrderIterator(const MyContainer<T>& container, bool begin) {
-        std::vector<T> temp = container.data;// Access allowed via 'friend'
+        std::vector<T> temp = container.data; // Access allowed via 'friend'
+
+        if (temp.empty()) {
+            index = 0;  // begin == end עבור מיכל ריק
+            return;
+        }
+
         std::sort(temp.begin(), temp.end());
 
         size_t left = 0;
         size_t right = temp.size() - 1;
-        while (left < right) {
-        sorted.push_back(temp[left]);
-        sorted.push_back(temp[right]);
-        ++left;
-        --right;
-    }
-    // Add the middle element (only if size is odd)
-    if (left == right) {
-        sorted.push_back(temp[left]);
-    }
 
+        while (left < right) {
+            sorted.push_back(temp[left]);
+            sorted.push_back(temp[right]);
+            ++left;
+            --right;
+        }
+
+        // Add the middle element (only if size is odd)
+        if (left == right) {
+            sorted.push_back(temp[left]);
+        }
 
         index = begin ? 0 : sorted.size();
     }

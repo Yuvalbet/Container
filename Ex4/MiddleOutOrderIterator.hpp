@@ -37,11 +37,12 @@ public:
     MiddleOutOrderIterator(const MyContainer<T>& container, bool begin) {
         const std::vector<T>& original = container.data; // Access allowed via 'friend'
         int n = static_cast<int>(original.size());
+
         if (n == 0) {
-            index = 0;
+            index = 0;  // both begin and end are index 0
             return;
         }
-        
+
         int mid = n / 2;
         if (n % 2 == 0) {
             mid = mid - 1;  // For even-sized containers, start at the left-middle
@@ -97,6 +98,7 @@ public:
 
         index = begin ? 0 : sorted.size();
     }
+
 
     // Equality operator
     bool operator==(const MiddleOutOrderIterator& other) const {

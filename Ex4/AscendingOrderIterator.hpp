@@ -24,10 +24,16 @@ private:
 public:
     // Constructor
     AscendingOrderIterator(const MyContainer<T>& container, bool begin) {
-        sorted = container.data;  // Allowed due to 'friend' declaration in MyContainer
-        std::sort(sorted.begin(), sorted.end());  // Sort the data in ascending order
-        index = begin ? 0 : sorted.size(); 
+    sorted = container.data;
+
+        if (!sorted.empty()) {
+            std::sort(sorted.begin(), sorted.end());
+            index = begin ? 0 : sorted.size();  // end iterator points to past-the-end
+        } else {
+            index = 0; // for both begin and end in an empty container
+        }
     }
+
 
     // Equality comparison
     bool operator==(const AscendingOrderIterator& other) const {

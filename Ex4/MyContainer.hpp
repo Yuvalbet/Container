@@ -1,4 +1,4 @@
-//Email: yuvali532@gmail.com
+// Email: yuvali532@gmail.com
 #ifndef MY_CONTAINER_HPP
 #define MY_CONTAINER_HPP
 
@@ -15,147 +15,150 @@
 #include "OrderIterator.hpp"
 #include "MiddleOutOrderIterator.hpp"
 
-namespace Container {
+namespace Container
+{
 
-template<typename T = int>
-class MyContainer {
-private:
-    std::vector<T> data;
+    template <typename T = int>
+    class MyContainer
+    {
+    private:
+        std::vector<T> data;
 
-public:
-    MyContainer() = default;
+    public:
+        MyContainer() = default;
 
-    //Destructor
-    ~MyContainer() = default;
+        // Destructor
+        ~MyContainer() = default;
 
+        // Adds an element to the container
+        void add(const T &element)
+        {
+            data.push_back(element);
+        }
 
-    // Adds an element to the container
-    void add(const T& element) {
-        data.push_back(element);
-    }
+        // Removes all occurrences of the element
+        void remove(const T &element)
+        {
+            auto size = data.size();
+            auto it = std::remove(data.begin(), data.end(), element);
+            data.erase(it, data.end());
 
-    // Removes all occurrences of the element
-    void remove(const T& element) {
-    auto it = std::remove(data.begin(), data.end(), element);
-    if (it == data.end()) {
-        throw std::runtime_error("Item not found in container.");
-    }
-    data.erase(it, data.end());
-    }
-
-
-    // Returns number of elements in the container
-    size_t size() const {
-        return data.size();
-    }
-
-    // Overloaded stream operator to print container contents
-    friend std::ostream& operator<<(std::ostream& os, const MyContainer& container) {
-        os << "[";
-        for (size_t i = 0; i < container.data.size(); ++i) {
-            os << container.data[i];
-            if (i + 1 < container.data.size()) {
-                os << ", ";
+            if (data.size() == size)
+            {
+                throw std::runtime_error("Item not found in container.");
             }
+            
         }
-        os << "]";
-        return os;
-    }
 
-    // Declare iterator classes as friends to allow them access to private 'data'
-    friend class AscendingOrderIterator<T>;
-    friend class DescendingOrderIterator<T>;
-    friend class SideCrossOrderIterator<T>;
-    friend class ReverseOrderIterator<T>;
-    friend class OrderIterator<T>;
-    friend class MiddleOutOrderIterator<T>;
-
-
-
-    // Ascending order iterators
-
-    AscendingOrderIterator<T> begin_ascending_order() const {
-        if (data.empty()) {
-            return end_ascending_order();
+        // Returns number of elements in the container
+        size_t size() const
+        {
+            return data.size();
         }
-        return AscendingOrderIterator<T>(*this, true);
-    }
 
-    AscendingOrderIterator<T> end_ascending_order() const {
-        return AscendingOrderIterator<T>(*this, false);
-    }
-
-    // Descending order iterators
-
-    DescendingOrderIterator<T> begin_descending_order() const {
-        if (data.empty()) {
-            return end_descending_order();
+        // Overloaded stream operator to print container contents
+        friend std::ostream &operator<<(std::ostream &os, const MyContainer &container)
+        {
+            os << "[";
+            for (size_t i = 0; i < container.data.size(); ++i)
+            {
+                os << container.data[i];
+                if (i + 1 < container.data.size())
+                {
+                    os << ", ";
+                }
+            }
+            os << "]";
+            return os;
         }
-        return DescendingOrderIterator<T>(*this, true);
-    }
 
-    DescendingOrderIterator<T> end_descending_order() const {
-        return DescendingOrderIterator<T>(*this, false);
-    }
+        // Declare iterator classes as friends to allow them access to private 'data'
+        friend class AscendingOrderIterator<T>;
+        friend class DescendingOrderIterator<T>;
+        friend class SideCrossOrderIterator<T>;
+        friend class ReverseOrderIterator<T>;
+        friend class OrderIterator<T>;
+        friend class MiddleOutOrderIterator<T>;
 
-    // Side-cross order iterators 
+        // Ascending order iterators
 
-    SideCrossOrderIterator<T> begin_side_cross_order() const {
-        if (data.empty()) {
-            return end_side_cross_order();
+        AscendingOrderIterator<T> begin_ascending_order() const
+        {
+
+            return AscendingOrderIterator<T>(*this, true);
         }
-        return SideCrossOrderIterator<T>(*this, true);
-    }
 
-    SideCrossOrderIterator<T> end_side_cross_order() const {
-        return SideCrossOrderIterator<T>(*this, false);
-    }
-
-    // Reverse order iterators
-
-    ReverseOrderIterator<T> begin_reverse_order() const {
-        if (data.empty()) {
-            return end_reverse_order();
+        AscendingOrderIterator<T> end_ascending_order() const
+        {
+            return AscendingOrderIterator<T>(*this, false);
         }
-        return ReverseOrderIterator<T>(*this, true);
-    }
 
-    ReverseOrderIterator<T> end_reverse_order() const {
-        return ReverseOrderIterator<T>(*this, false);
-    }
+        // Descending order iterators
 
-    // Regular order iterators
+        DescendingOrderIterator<T> begin_descending_order() const
+        {
 
-    OrderIterator<T> begin_order() const {
-        if (data.empty()) {
-            return end_order();
+            return DescendingOrderIterator<T>(*this, true);
         }
-        return OrderIterator<T>(*this, true);
-    }
 
-    OrderIterator<T> end_order() const {
-        return OrderIterator<T>(*this, false);
-    }
-
-    // Middle-out order iterators
-
-    MiddleOutOrderIterator<T> begin_middle_out_order() const {
-        if (data.empty()) {
-            return end_middle_out_order();
+        DescendingOrderIterator<T> end_descending_order() const
+        {
+            return DescendingOrderIterator<T>(*this, false);
         }
-        return MiddleOutOrderIterator<T>(*this, true);
-    }
 
-    MiddleOutOrderIterator<T> end_middle_out_order() const {
-        return MiddleOutOrderIterator<T>(*this, false);
-    }
+        // Side-cross order iterators
 
+        SideCrossOrderIterator<T> begin_side_cross_order() const
+        {
 
+            return SideCrossOrderIterator<T>(*this, true);
+        }
 
+        SideCrossOrderIterator<T> end_side_cross_order() const
+        {
+            return SideCrossOrderIterator<T>(*this, false);
+        }
 
+        // Reverse order iterators
 
-};
+        ReverseOrderIterator<T> begin_reverse_order() const
+        {
 
-} 
+            return ReverseOrderIterator<T>(*this, true);
+        }
 
-#endif  
+        ReverseOrderIterator<T> end_reverse_order() const
+        {
+            return ReverseOrderIterator<T>(*this, false);
+        }
+
+        // Regular order iterators
+
+        OrderIterator<T> begin_order() const
+        {
+
+            return OrderIterator<T>(*this, true);
+        }
+
+        OrderIterator<T> end_order() const
+        {
+            return OrderIterator<T>(*this, false);
+        }
+
+        // Middle-out order iterators
+
+        MiddleOutOrderIterator<T> begin_middle_out_order() const
+        {
+
+            return MiddleOutOrderIterator<T>(*this, true);
+        }
+
+        MiddleOutOrderIterator<T> end_middle_out_order() const
+        {
+            return MiddleOutOrderIterator<T>(*this, false);
+        }
+    };
+
+}
+
+#endif
