@@ -84,7 +84,6 @@ namespace Container
 
         AscendingOrderIterator<T> begin_ascending_order() const
         {
-
             return AscendingOrderIterator<T>(*this, true);
         }
 
@@ -97,7 +96,6 @@ namespace Container
 
         DescendingOrderIterator<T> begin_descending_order() const
         {
-
             return DescendingOrderIterator<T>(*this, true);
         }
 
@@ -110,7 +108,6 @@ namespace Container
 
         SideCrossOrderIterator<T> begin_side_cross_order() const
         {
-
             return SideCrossOrderIterator<T>(*this, true);
         }
 
@@ -123,7 +120,6 @@ namespace Container
 
         ReverseOrderIterator<T> begin_reverse_order() const
         {
-
             return ReverseOrderIterator<T>(*this, true);
         }
 
@@ -136,7 +132,6 @@ namespace Container
 
         OrderIterator<T> begin_order() const
         {
-
             return OrderIterator<T>(*this, true);
         }
 
@@ -149,7 +144,6 @@ namespace Container
 
         MiddleOutOrderIterator<T> begin_middle_out_order() const
         {
-
             return MiddleOutOrderIterator<T>(*this, true);
         }
 

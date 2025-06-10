@@ -31,7 +31,7 @@ public:
         std::vector<T> temp = container.data; // Access allowed via 'friend'
 
         if (temp.empty()) {
-            index = 0;  // begin == end עבור מיכל ריק
+            index = 0;  
             return;
         }
 
